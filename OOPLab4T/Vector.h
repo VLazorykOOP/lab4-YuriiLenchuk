@@ -405,7 +405,7 @@ public:
 		return result;
 	};
 	friend istream& operator>>(istream& is, ShortVector& sv);
-	friend ostream& operator<<(ostream& is, ShortVector& sv);
+	friend ostream& operator<<(ostream& os, const ShortVector& sv);
 	short operator[](size_t ind) {
 		if (ind >= num) state = 1;
 		return (ind < num) ? v[ind] : v[num-1];
@@ -477,10 +477,13 @@ public:
 };
 istream& operator>>(istream& is, ShortVector& sv)
 {
-	cout << "Enter vector size";
-	is >> sv.num;
 	delete[] sv.v;
 	sv.v = new short[sv.num];
+	if (!sv.v)
+	{
+		sv.state = 2;
+		return;
+	}
 	sv.state = 0;
 	for (int i = 0; i < sv.num; i++)
 	{
@@ -489,11 +492,11 @@ istream& operator>>(istream& is, ShortVector& sv)
 	return is;
 }
 
-ostream& operator<<(ostream& is, ShortVector& sv)
+ostream& operator<<(ostream& os, const ShortVector& sv)
 {
 	for (int i = 0; i < sv.num; i++)
 	{
-		is << sv.v[i] << ' ';
+		os << sv.v[i] << ' ';
 	}
-	return is;
+	return os;
 }
