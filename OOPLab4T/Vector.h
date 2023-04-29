@@ -16,25 +16,41 @@ public:
 		if (n <= 0) n = 2;  // default num =2;
 		num = n;
 		v = new short[n];
+		object_count++;
+		if (!v) {
+			state = 2;
+			return;
+		}
 		for (int i = 0; i < n; i++) {
 			v[i] = 0;
 		}
-		object_count++;
 	}
 	ShortVector(int n, short b) : ShortVector(n) {
-		for (int i = 0; i < num; i++) v[i] = b;
 		object_count++;
+		if (!v) {
+			state = 2;
+			return;
+		}
+		for (int i = 0; i < num; i++) v[i] = b;
 	};
 	ShortVector(int n, short* p) : ShortVector(n) {
-		if (p != nullptr) for (int i = 0; i < num; i++) v[i] = p[i];
 		object_count++;
+		if (!v) {
+			state = 2;
+			return;
+		}
+		if (p != nullptr) for (int i = 0; i < num; i++) v[i] = p[i];
 	};
 	ShortVector(const ShortVector& s) {
 		num = s.num;
 		v = new short[num];
+		object_count++;
+		if (!v) {
+			state = 2;
+			return;
+		}
 		state = s.state;
 		for (int i = 0; i < num; i++)   v[i] = s.v[i];
-		object_count++;
 	};
 	ShortVector operator+(ShortVector s) const {
 		if (num != s.num) {
@@ -70,19 +86,6 @@ public:
 			result.v[i] = v[i] * scalar;
 		}
 		return result;
-	};
-	bool operator>(const ShortVector s) const {
-		if (num != s.num) {
-			return false;
-		}
-		else {
-			for (int i = 0; i < num; i++) {
-				if (v[i] <= s.v[i]) {
-					return false;
-				}
-			}
-			return true;
-		}
 	};
 	bool operator!=(const ShortVector s) const {
 		if (num != s.num) {
@@ -132,11 +135,20 @@ public:
 			cout << "Index error";
 			return;
 		}
+		if (state == 2)
+		{
+			cout << "Memory error";
+			return;
+		}
 		if (num != 0) {
 			for (int i = 0; i < num; i++) {
 				cout << " v [ " << i << " ]   " << v[i] << '\t';
 				cout << endl;
 			}
+		}
+		else
+		{
+			cout << "Vector is empty";
 		}
 	};
 	void Input() {
@@ -394,11 +406,74 @@ public:
 	};
 	friend istream& operator>>(istream& is, ShortVector& sv);
 	friend ostream& operator<<(ostream& is, ShortVector& sv);
-	short operator[](int ind) {
+	short operator[](size_t ind) {
 		if (ind >= num) state = 1;
 		return (ind < num) ? v[ind] : v[num-1];
 	}
-
+	void* operator new(size_t n) {
+		ShortVector(n);
+	}
+	void operator delete(void* ptr) {
+		delete ptr;
+	}
+	ShortVector operator()(int value) {
+		for  (int i = 0; i < num; i++)
+		{
+			v[i] = value;
+		}
+	}
+	bool operator>(const ShortVector s) const {
+		if (num != s.num) {
+			return false;
+		}
+		else {
+			for (int i = 0; i < num; i++) {
+				if (v[i] <= s.v[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+	};
+	bool operator>=(const ShortVector s) const {
+		if (num != s.num) {
+			return false;
+		}
+		else {
+			for (int i = 0; i < num; i++) {
+				if (v[i] < s.v[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+	};
+	bool operator<(const ShortVector s) const {
+		if (num != s.num) {
+			return false;
+		}
+		else {
+			for (int i = 0; i < num; i++) {
+				if (v[i] >= s.v[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+	};
+	bool operator<(const ShortVector s) const {
+		if (num != s.num) {
+			return false;
+		}
+		else {
+			for (int i = 0; i < num; i++) {
+				if (v[i] < s.v[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+	};
 };
 istream& operator>>(istream& is, ShortVector& sv)
 {
