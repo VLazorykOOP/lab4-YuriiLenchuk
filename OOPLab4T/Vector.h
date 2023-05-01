@@ -3,7 +3,7 @@
 #include <math.h>
 using namespace std;
 
-int object_count = 0;
+int vector_object_count = 0;
 
 class ShortVector
 {
@@ -11,12 +11,12 @@ class ShortVector
 	int num;   // default num=2
 	int state = 0;
 public:
-	ShortVector() : ShortVector(2) { object_count++; }
-	ShortVector(int n) {
+	ShortVector() : ShortVector(2) { vector_object_count++; }
+	ShortVector(size_t n) {
 		if (n <= 0) n = 2;  // default num =2;
 		num = n;
 		v = new short[n];
-		object_count++;
+		vector_object_count++;
 		if (!v) {
 			state = 2;
 			return;
@@ -25,16 +25,16 @@ public:
 			v[i] = 0;
 		}
 	}
-	ShortVector(int n, short b) : ShortVector(n) {
-		object_count++;
+	ShortVector(size_t n, short b) : ShortVector(n) {
+		vector_object_count++;
 		if (!v) {
 			state = 2;
 			return;
 		}
 		for (int i = 0; i < num; i++) v[i] = b;
 	};
-	ShortVector(int n, short* p) : ShortVector(n) {
-		object_count++;
+	ShortVector(size_t n, short* p) : ShortVector(n) {
+		vector_object_count++;
 		if (!v) {
 			state = 2;
 			return;
@@ -44,7 +44,7 @@ public:
 	ShortVector(const ShortVector& s) {
 		num = s.num;
 		v = new short[num];
-		object_count++;
+		vector_object_count++;
 		if (!v) {
 			state = 2;
 			return;
@@ -126,7 +126,7 @@ public:
 	};
 	~ShortVector() {
 		delete[] v;
-		object_count--;
+		vector_object_count--;
 	}
 	void set(int index, short x = 0) { if (index >= 0 && index <= num) v[index] = x; else state = 1; }
 	short get(int index) { if (index >= 0 && index <= num) return v[index]; else state = 1; }
@@ -171,6 +171,7 @@ public:
 		{
 			v[i]++;
 		}
+		return *this;
 	}
 	ShortVector operator--() {
 		for (int i = 0; i < num; i++)
@@ -194,6 +195,7 @@ public:
 		{
 			v[i] = -v[i];
 		}
+		return *this;
 	}
 	ShortVector operator+=(ShortVector s) {
 		ShortVector result;
@@ -275,22 +277,6 @@ public:
 		ShortVector result(num);
 		for (int i = 0; i < num; i++) {
 			result.v[i] = v[i] % scalar;
-		}
-
-		if (num != result.num)
-		{
-			delete[] v;
-			num = result.num;
-			v = new short[num];
-			state = result.state;
-		}
-		for (int i = 0; i < num; i++)   v[i] = result.v[i];
-		return *this;
-	}
-	ShortVector operator/=(short scalar) {
-		ShortVector result(num);
-		for (int i = 0; i < num; i++) {
-			result.v[i] = v[i] / scalar;
 		}
 
 		if (num != result.num)
@@ -406,21 +392,23 @@ public:
 	};
 	friend istream& operator>>(istream& is, ShortVector& sv);
 	friend ostream& operator<<(ostream& os, const ShortVector& sv);
-	short operator[](size_t ind) {
+	short& operator[](size_t ind) {
 		if (ind >= num) state = 1;
-		return (ind < num) ? v[ind] : v[num-1];
+		return (ind < num) ? v[ind] : v[num - 1];
 	}
-	void* operator new(size_t n) {
-		ShortVector(n);
+	void* operator new(size_t size, int n) {
+		ShortVector temp(n);
+		return &temp;
 	}
 	void operator delete(void* ptr) {
-		delete ptr;
+		ptr = nullptr;
 	}
 	ShortVector operator()(int value) {
-		for  (int i = 0; i < num; i++)
+		for (int i = 0; i < num; i++)
 		{
 			v[i] = value;
 		}
+		return *this;
 	}
 	bool operator>(const ShortVector s) const {
 		if (num != s.num) {
@@ -454,19 +442,6 @@ public:
 		}
 		else {
 			for (int i = 0; i < num; i++) {
-				if (v[i] >= s.v[i]) {
-					return false;
-				}
-			}
-			return true;
-		}
-	};
-	bool operator<(const ShortVector s) const {
-		if (num != s.num) {
-			return false;
-		}
-		else {
-			for (int i = 0; i < num; i++) {
 				if (v[i] < s.v[i]) {
 					return false;
 				}
@@ -482,7 +457,7 @@ istream& operator>>(istream& is, ShortVector& sv)
 	if (!sv.v)
 	{
 		sv.state = 2;
-		return;
+		return is;
 	}
 	sv.state = 0;
 	for (int i = 0; i < sv.num; i++)
