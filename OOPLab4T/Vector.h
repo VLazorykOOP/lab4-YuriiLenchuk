@@ -449,17 +449,25 @@ public:
 			return true;
 		}
 	};
+	void init(int n) {
+		if (num != n) {
+			if (v != nullptr) delete[] v;
+			num = n;
+			v = new short[n];
+		}
+		for (int i = 0; i < num; i++) 	v[i] = 0;
+	}
+	void init(int n, short b) {
+		if (num != n) {
+			if (v != nullptr) delete[] v;
+			num = n;
+			v = new short[n];
+		}
+		for (int i = 0; i < num; i++) 	v[i] = b;
+	}
 };
 istream& operator>>(istream& is, ShortVector& sv)
 {
-	delete[] sv.v;
-	sv.v = new short[sv.num];
-	if (!sv.v)
-	{
-		sv.state = 2;
-		return is;
-	}
-	sv.state = 0;
 	for (int i = 0; i < sv.num; i++)
 	{
 		is >> sv.v[i];

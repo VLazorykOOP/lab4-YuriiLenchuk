@@ -2,9 +2,11 @@
 #include "Lab4Exmaple.h"
 #include "Vector.h"
 #include "Matrix.h"
-#include "MyAssoc.h"
+#include "Associated Class.h"
+#include <map>
+#include <string>
 
-
+using namespace std;
 
 int mainExample1() {
 
