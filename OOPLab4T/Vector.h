@@ -396,8 +396,8 @@ public:
 		if (ind >= num) state = 1;
 		return (ind < num) ? v[ind] : v[num - 1];
 	}
-	void* operator new(size_t size, int n) {
-		ShortVector temp(n);
+	void* operator new(size_t size) {
+		ShortVector temp();
 		return &temp;
 	}
 	void operator delete(void* ptr) {
@@ -464,6 +464,9 @@ public:
 			v = new short[n];
 		}
 		for (int i = 0; i < num; i++) 	v[i] = b;
+	}
+	int length() {
+		return num;
 	}
 };
 istream& operator>>(istream& is, ShortVector& sv)

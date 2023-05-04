@@ -8,7 +8,7 @@
 
 using namespace std;
 
-int mainExample1() {
+void mainExample1() {
 
 	/// Задано : A,B,C,D,F  -  Вектори цілих чисел 
 	///         a,b,c - задані цілі числа.
@@ -28,69 +28,41 @@ int mainExample1() {
 	
 	cout << " \n F = \n" << F;
 	cout << " ++A = \n" << ++A;
-	return 2;
 }
 
 
+void mainExample2() {
+	ContactList list;
+	list("Ivan", "qwe@famil.com", "1234567890");
+	list("Andrii", "123@famil.com", "0987654321");
+	cin >> list;
+	cout << list;
+}
 
-/// <summary>
-	/// Задано : A,B,C,D,F  -  Матриці комплесних чисел
-	///          a,b,c  -  Вектори комплесних чисел 
-	///          _a,_b,_c - комплексні числа.
-	/// Обчислити вираз : F = A+B*_a-B*_c+C/_b; 
-	///                   c = F*a + D*b         
-	/// </summary>
-	/// <returns></returns>
-
-int mainExample2() {
-	ComplexMatrix A(5),  B(5), C(5), D(5), F(5);
-	ComplexVector a(5), b(5), c(5);
-	ComplexDouble _a(3.2, 5), _b(1, 2), _c = RandComplexDouble();
-	
-		A.RandComplexMatrix();
-		B.RandComplexMatrix();
-		C.RandComplexMatrix();
-		D.RandComplexMatrix();
-		a.RandComplexVector();
-		b.RandComplexVector();
-		c.RandComplexVector();
-
-		cout << endl;
-		cout << "Matrix A \n" << A;
-		cout << "Matrix B \n" << B;
-		cout << "Matrix C \n" << C;
-		cout << "Matrix D \n" << D;
-		cout << endl;
-		cout << "Vector a \n" << a;
-		cout << "Vector b \n" << b;
-		cout << "Vector c \n" << c;
-	
-	/// Обчислити вираз : F = A+B*_a-B*_c+C/_b; 
-	///                   c = F*a + D*b     
-	F = A + B * _a - B * _c + C / _b;
-	cout << "Matrix F \n" << F;
-	c = F * a + D * b;
+/// Задано : A,B,C,D,F  -  Матриці цілих чисел
+///          a,b,c  -  Вектори цілих чисел 
+///          _a, _b, _c - цілих числа.
+/// Обчислити вираз : F = A+B*_a-B*_c+C/_b; 
+///                   A = F*a + D*b     
+void mainExample3() {
+	Matrix A(5, 2, 1), B(5, 3, 2), C(5, 4, 3), D(5, 5, 4), F(5, 6, 5);
+	ShortVector a(5, 1), b(5, 2), c(5, 3);
+	short _a = 2, _b = 3, _c = 4;
+	cout << endl;
+	cout << "Matrix A \n" << A;
+	cout << "Matrix B \n" << B;
+	cout << "Matrix C \n" << C;
+	cout << "Matrix D \n" << D;
+	cout << endl;
+	cout << "Vector a \n" << a;
+	cout << "Vector b \n" << b;
 	cout << "Vector c \n" << c;
 
-	
-	return 3;
-}
-int mainExample3() {
-	cout << " End begin \n";
-	uint Flight[5] = { 12,32,23,43,43 };
-	MyTime MTime[5] = { {9,10}, {10,30}, {10,30}, {10,30} , {15,35} };
-	MyAssoc dbase(5, Flight, MTime);
-	dbase.TableFlight();
-	MyTime r = { 10,30 }, ro;
-	uint fli = 32;
-	ro = dbase[fli];
-	cout << " Test : MyTime operator[](uint&s  )  " << "Flight " << fli << " time   " <<
-		ro << endl;
-	cout << " Test : uint	operator[](MyTime&s)  " << " time  " << r << " light  " <<
-		dbase[r] << endl;
-	cout << " Flight with time :   9   to  11 \n";
-	dbase(9, 11);
-	cout << " End test \n";
-	return 4;
+	/// Обчислити вираз : F = A+B*_a-B*_c+C/_b; 
+	///                   A = F*a + D*b     
+	F = A + B * _a - B * _c + C / _b;
+	cout << "Matrix F \n" << F;
+	A = F * a + D * b;
+	cout << "Matrix A \n" << A;
 }
 
