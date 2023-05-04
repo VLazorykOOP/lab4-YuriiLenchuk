@@ -18,12 +18,6 @@
     <ClCompile Include="OOPLab4T.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="MyAssoc.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Matrix.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
     <ClCompile Include="Lab4Exmaple.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
@@ -36,9 +30,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Vector.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="MyAssoc.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Associated Class.h">

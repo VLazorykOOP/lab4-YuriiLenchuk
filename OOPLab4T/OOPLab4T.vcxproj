@@ -139,9 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Lab4Exmaple.cpp" />
-    <ClCompile Include="MyAssoc.cpp" />
     <ClCompile Include="OOPLab4T.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +147,6 @@
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Lab4Exmaple.h" />
-    <ClInclude Include="MyAssoc.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
