@@ -433,17 +433,17 @@ public:
 		ptr = nullptr;
 	}
 	friend istream& operator>>(istream& is, Matrix& m);
-	friend ostream& operator<<(ostream& os, const Matrix& svm;
+	friend ostream& operator<<(ostream& os, const Matrix& svm);
 };
 
 istream& operator>>(istream& is, Matrix& m)
 {
-	for (size_t i = 0; i < m.n; i++) for (size_t i = 0; i < m.m; i++) is >> m.data[i][j];
+	for (size_t i = 0; i < m.n; i++) for (size_t j = 0; j < m.m; j++) is >> m.data[i][j];
 	return is;
 }
 
 ostream& operator<<(ostream& os, const Matrix& m)
 {
-	for (size_t i = 0; i < m.n; i++, cout << endl) for (size_t i = 0; i < m.m; i++) os << m.data[i][j] << ' ';
+	for (size_t i = 0; i < m.n; i++, cout << endl) for (size_t j = 0; j < m.m; j++) os << m.data[i][j] << ' ';
 	return os;
 }
