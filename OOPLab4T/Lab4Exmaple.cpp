@@ -8,6 +8,8 @@
 
 using namespace std;
 
+int Matrix::num_matrix = 0;
+
 void mainExample1() {
 
 	/// Задано : A,B,C,D,F  -  Вектори цілих чисел 
